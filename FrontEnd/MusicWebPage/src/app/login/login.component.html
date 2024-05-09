@@ -1,0 +1,63 @@
+<div *ngIf="!userSingUp && !userLogIn && !userloading" style="display: flex; justify-content: center; align-items: center" >
+  <form  [formGroup]="userSignUpForm" class="singUpForm">
+    <div style="display: flex; justify-content: center;align-items: center;">
+      <img src="../../assets/Screenshot at 2024-05-07 12-42-51.png" style="height: 75px; width: 75px;" alt="logo"/>
+    </div>
+    <h2 style="text-align: center; padding-top: 10px;">
+      Login
+    </h2>
+    <mat-form-field class="singUpForm-Field">
+      <mat-label>Username</mat-label>
+      <input type="email" matInput [formControl]="usernameControl" [errorStateMatcher]="matcher" placeholder="Example@example.com">
+    </mat-form-field>
+    <div *ngIf="(usernameControl.hasError('email') && !usernameControl.hasError('required'))"  style="text-align: center;">
+      <mat-error>Please enter a valid email address</mat-error>
+    </div>
+    <div  *ngIf="usernameControl.hasError('required')"  style="text-align: center;">
+      <mat-error>Username is <strong>required</strong></mat-error>
+    </div>
+    <mat-form-field class="singUpForm-Field">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" [formControl]="passwordControl" [errorStateMatcher]="matcher">
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    <div *ngIf="(passwordControl.hasError('pattern') && !passwordControl.hasError('required'))"  style="text-align: center;">
+      <mat-error>Please enter a valid password</mat-error>
+    </div>
+    <div  *ngIf="passwordControl.hasError('required')"  style="text-align: center;">
+      <mat-error>Password is <strong>required</strong></mat-error>
+    </div>
+    <div style="padding: 10px;">
+      <a class="button" style="display: grid; text-align: center;">
+        <button mat-button (click)="singUp()">Create an Account</button>
+      </a>
+    </div>
+    <button mat-flat-button color="primary" [disabled]="!userSignUpForm.valid" class="signUpButton" (click)="loginToWebApp()">Log In</button>
+  </form>
+</div>
+
+<app-sing-up *ngIf="userSingUp" style="display: flex; justify-content: center; align-items: center" (userSingUp)="backToLoginPage($event)"></app-sing-up>
+
+<div *ngIf="userloading" style="display: flex; justify-content: center; align-items: center;">
+  <mat-spinner style="background-color: beige;"></mat-spinner>
+</div>
+
+<div *ngIf="userLogIn && !userloading">
+  <!-- Set bar here with louout button -->
+  <nav class="navbar navbar-light bg-light" style="justify-content: center; align-content: center;">
+    <img src="../../assets/Screenshot at 2024-05-07 12-42-51.png" style="height: 75px; width: 75px;" alt="logo"/>
+    <div ngbDropdown class="d-inline-block">
+      <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+        Welcome back {{getSessionStorageDataUsername()}}
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+				<button ngbDropdownItem (click)="useerLogOut()">LogOut</button>
+			</div>
+    </div>
+  </nav>
+  <app-welcome-page></app-welcome-page>
+</div>
+
+

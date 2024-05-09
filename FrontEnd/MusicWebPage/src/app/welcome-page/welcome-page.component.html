@@ -1,0 +1,16 @@
+<div style="height: 100%; width: 100%; background-color: beige;" >
+    <mat-tab-group (selectedTabChange)="tabEvent($event)" *ngIf="!showTrackDetail" [selectedIndex]="trackDetailData.pageIndex">
+        <mat-tab label="Recommended Music">
+            <app-recommended-music (getTrackDetail)="trackDetail($event)"></app-recommended-music>
+        </mat-tab>
+        <mat-tab label="Search Music">
+            <app-search-music (getTrackDetail)="trackDetail($event)"></app-search-music>
+        </mat-tab>
+        <mat-tab label="Favourite Music">
+            <app-favourite-music (getTrackDetail)="trackDetail($event)"></app-favourite-music>
+        </mat-tab>
+    </mat-tab-group>
+    <div *ngIf="showTrackDetail">
+        <app-track-detail [trackDetailData]="trackDetailData" (getTrackDetail)="trackDetail($event)"></app-track-detail>
+    </div>
+</div>

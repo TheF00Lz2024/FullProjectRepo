@@ -1,0 +1,28 @@
+<!-- <p>{{trackDetailData.trackDetail.id}}</p> -->
+<div style="display: flex; justify-content: center;">
+    <h1 style="font-size: larger;">
+        <b>Track Detail</b>
+    </h1>
+</div>
+<div style="display: flex; justify-content: center;">
+    <img [src]=trackDetailData.trackDetail.trackImageUrl style="width: 300px; height: 250px;" alt="image not found!"/>
+</div>
+<br/>
+<div style="display: flex; justify-content: center;">
+    <p style="font-size: larger;">
+        <b>Track ID: {{trackDetailData.trackDetail.id}}</b>
+    </p>
+</div>
+<div style="display: flex; justify-content: center;">
+    <p style="font-size: larger;">
+        <b>Track Name: {{trackDetailData.trackDetail.trackName}}</b>
+    </p>
+</div>
+<div style="display: flex; justify-content: center;">
+    <p style="font-size: larger;">
+        <b>Artist Name: {{trackDetailData.trackDetail.artistName}}</b>
+    </p>
+</div>
+<div style="display: flex; justify-content: center;">
+    <button mat-flat-button color="primary" (click)="backFunction(trackDetailData)">Back</button>
+</div>

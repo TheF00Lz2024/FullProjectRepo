@@ -1,0 +1,54 @@
+<form *ngIf="!userloading" [formGroup]="userSignUpForm" class="singUpForm">
+  <div style="display: flex; justify-content: center;align-items: center;">
+    <img src="../../assets/Screenshot at 2024-05-07 12-42-51.png" style="height: 75px; width: 75px;" alt="logo"/>
+  </div>
+  <h2 style="text-align: center; padding-top: 10px;">
+    Sign Up
+  </h2>
+  <mat-form-field class="singUpForm-Field">
+    <mat-label>Username</mat-label>
+    <input type="email" matInput [formControl]="usernameControl" [errorStateMatcher]="matcher" placeholder="Example@example.com">
+  </mat-form-field>
+  <div *ngIf="(usernameControl.hasError('email') && !usernameControl.hasError('required'))"  style="text-align: center;">
+    <mat-error>Please enter a valid email address</mat-error>
+  </div>
+  <div  *ngIf="usernameControl.hasError('required')"  style="text-align: center;">
+    <mat-error>Username is <strong>required</strong></mat-error>
+  </div>
+  <mat-form-field class="singUpForm-Field">
+    <mat-label>Password</mat-label>
+    <input matInput [type]="hidePassword ? 'password' : 'text'" [formControl]="passwordControl" [errorStateMatcher]="matcher">
+    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+      <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <div *ngIf="(passwordControl.hasError('pattern') && !passwordControl.hasError('required'))"  style="text-align: center;">
+    <mat-error>Need 1 Captial and Small letter, 1 Number at least 8 Character!</mat-error>
+  </div>
+  <div  *ngIf="passwordControl.hasError('required')"  style="text-align: center;">
+    <mat-error>Password is <strong>required</strong></mat-error>
+  </div>
+  <mat-form-field class="singUpForm-Field">
+    <mat-label>Confirm Password</mat-label>
+    <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" [formControl]="confirmPasswordControl" [errorStateMatcher]="matcher" [readonly]="!(!passwordControl.hasError('pattern') && !passwordControl.hasError('required'))">
+    <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
+      <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <div *ngIf="(passwordControl.value !== confirmPasswordControl.value && !passwordControl.hasError('required'))" style="text-align: center;">
+    <mat-error>Password Not matching</mat-error>
+  </div>
+  <div *ngIf="passwordControl.hasError('required')"  style="text-align: center;">
+    <mat-error>Confirm Password is <strong>required</strong></mat-error>
+  </div>
+  <div style="padding: 10px;">
+    <a class="button" style="display: grid; text-align: center;">
+      <button mat-button (click) = "login()">Back to Log In</button>
+    </a>
+  </div>
+  <button mat-flat-button color="primary" (click)="userSignUp()" [disabled]="(!userSignUpForm.valid || ( passwordControl.value !== confirmPasswordControl.value))" class="signUpButton">Confirm</button>
+</form>
+
+<div *ngIf="userloading" style="display: flex; justify-content: center; align-items: center;">
+  <mat-spinner style="background-color: beige;"></mat-spinner>
+</div>

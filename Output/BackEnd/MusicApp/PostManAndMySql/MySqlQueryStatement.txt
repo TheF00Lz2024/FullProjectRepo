@@ -1,0 +1,7 @@
+Select user statement
+
+SELECT * FROM user;
+
+
+Get user favourite track
+SELECT * FROM user_favourite_song_list WHERE user_id='Test@gmail.com';
